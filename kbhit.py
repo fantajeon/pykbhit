@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+
 '''
 A Python class implementing KBHIT, the standard keyboard-interrupt poller.
 Works transparently on Windows and Posix (Linux, Mac OS X).  Doesn't work
@@ -14,6 +15,7 @@ but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 
+http://home.wlu.edu/~levys/software/kbhit.py
 '''
 
 import os
