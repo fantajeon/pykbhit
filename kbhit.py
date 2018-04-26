@@ -32,7 +32,7 @@ else:
 
 class KBHit:
     
-    def __init__(self):
+    def __init__(self, off_echo=True):
         '''Creates a KBHit object that you can call to do various keyboard things.
         '''
 
@@ -47,19 +47,14 @@ class KBHit:
             self.old_term = termios.tcgetattr(self.fd)
     
             # New terminal setting unbuffered
-            self.new_term[3] = (self.new_term[3] & ~termios.ICANON & ~termios.ECHO)
+            if off_echo:
+                self.new_term[3] = (self.new_term[3] & ~termios.ICANON & ~termios.ECHO)
+            else:
+                self.new_term[3] = (self.new_term[3] & ~termios.ICANON)
             termios.tcsetattr(self.fd, termios.TCSAFLUSH, self.new_term)
     
             # Support normal-terminal reset at exit
             atexit.register(self.set_normal_term)
-    
-    def restore_echo(self):
-        self.new_term[3] = (self.new_term[3] & termios.ECHO)
-        termios.tcsetattr(self.fd, termios.TCSAFLUSH, self.new_term)
-
-    def off_echo(self):
-        self.new_term[3] = (self.new_term[3] & ~termios.ECHO)
-        termios.tcsetattr(self.fd, termios.TCSAFLUSH, self.new_term)
     
     def set_normal_term(self):
         ''' Resets to normal terminal.  On Windows this is a no-op.
